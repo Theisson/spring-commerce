@@ -10,7 +10,7 @@ public final class Email {
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
     private static final Pattern PATTERN = Pattern.compile(EMAIL_PATTERN);
 
-    @Column(name = "email", nullable = false, length = 254, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private final String email;
 
     protected Email() {
@@ -27,7 +27,7 @@ public final class Email {
             throw new IllegalArgumentException("Email não pode estar vazio.");
         }
 
-        if(email.length() < 6 || email.length() > 254) {
+        if(email.length() < 6 || email.length() > 255) {
             throw new IllegalArgumentException("Quantidade de caracteres inválida para um email.");
         }
         
