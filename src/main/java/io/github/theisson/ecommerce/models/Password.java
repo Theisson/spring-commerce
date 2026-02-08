@@ -19,15 +19,15 @@ public final class Password {
     }
 
     private void validate(String password) {
-        if(password == null || password.isEmpty()) {
+        if (password == null || password.isEmpty()) {
             throw new IllegalArgumentException("A senha não pode estar vazia.");
         }
 
-        if(password.length() < 8) {
+        if (password.length() < 8) {
             throw new IllegalArgumentException("A senha deve conter pelo menos 8 caracteres");
         }
 
-        if(password.length() > 128) {
+        if (password.length() > 128) {
             throw new IllegalArgumentException("Senha muito longa. Limite de 128 caracteres.");
         }
     }

@@ -23,17 +23,17 @@ public final class Email {
     }
 
     private void validate(String email) {
-        if(email == null || email.isEmpty()) {
+        if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException("Email não pode estar vazio.");
         }
 
-        if(email.length() < 6 || email.length() > 255) {
+        if (email.length() < 6 || email.length() > 255) {
             throw new IllegalArgumentException("Quantidade de caracteres inválida para um email.");
         }
         
         Matcher m = PATTERN.matcher(email);
 
-        if(!m.matches()) {
+        if (!m.matches()) {
             throw new IllegalArgumentException("Email inválido.");
         }
     }

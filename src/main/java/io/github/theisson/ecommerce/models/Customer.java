@@ -32,7 +32,8 @@ public class Customer {
     @CollectionTable(name = "customer_addresses", joinColumns = @JoinColumn(name = "customer_id"))
     private Set<Address> addresses = new HashSet<>();
     
-    //private Wallet wallet;
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Wallet wallet;
 
     protected Customer() {}
 
@@ -41,6 +42,7 @@ public class Customer {
         this.cpf = cpf;
         this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;
+        this.wallet = new Wallet(this);
     }
 
     public Long getId() {
@@ -65,6 +67,10 @@ public class Customer {
 
     public Set<Address> getAddresses() {
         return Collections.unmodifiableSet(addresses);
+    }
+
+    public Wallet getWallet() {
+        return wallet;
     }
 
     public void addAddress(Address address) {

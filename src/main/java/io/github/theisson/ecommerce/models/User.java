@@ -21,13 +21,6 @@ public class User {
 
     protected User() {}
 
-    public User(Long id, Username username, Email email, Password password) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
     public User(Username username, Email email, Password password) {
         this.username = username;
         this.email = email;

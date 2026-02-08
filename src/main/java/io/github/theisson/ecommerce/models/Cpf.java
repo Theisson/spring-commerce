@@ -19,11 +19,11 @@ public final class Cpf {
     }
 
     private void validate(String cpf) {
-        if(cpf == null || !cpf.matches("\\d{11}")) {
+        if (cpf == null || !cpf.matches("\\d{11}")) {
             throw new IllegalArgumentException("CPF deve conter exatamente 11 dígitos numéricos.");
         }
 
-        if(cpf.matches("(\\d)\\1{10}")) {
+        if (cpf.matches("(\\d)\\1{10}")) {
             throw new IllegalArgumentException("CPF inválido: números repetidos.");
         }
 
