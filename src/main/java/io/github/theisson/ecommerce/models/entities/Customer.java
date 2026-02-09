@@ -1,10 +1,10 @@
-package io.github.theisson.ecommerce.models;
+package io.github.theisson.ecommerce.models.entities;
 
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
+import io.github.theisson.ecommerce.models.*;
 import jakarta.persistence.*;
 
 @Entity
