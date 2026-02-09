@@ -1,8 +1,10 @@
 package io.github.theisson.ecommerce.models.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import io.github.theisson.ecommerce.models.*;
 import jakarta.persistence.*;
@@ -34,6 +36,10 @@ public class Customer {
     
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     private Wallet wallet;
+
+    @OneToMany(mappedBy = "customer")
+    @OrderBy("moment DESC")
+    private List<Order> orders = new ArrayList<>();
 
     protected Customer() {}
 
@@ -71,6 +77,10 @@ public class Customer {
 
     public Wallet getWallet() {
         return wallet;
+    }
+
+    public List<Order> getOrders() {
+        return Collections.unmodifiableList(orders);
     }
 
     public void addAddress(Address address) {
