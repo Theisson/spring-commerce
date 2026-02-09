@@ -1,7 +1,6 @@
 package io.github.theisson.ecommerce.models.entities;
 
 import java.time.Instant;
-
 import io.github.theisson.ecommerce.models.*;
 import jakarta.persistence.*;
 
@@ -22,6 +21,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 
     protected Order() {}
 
@@ -45,6 +47,15 @@ public class Order {
 
     public Customer getCustomer() {
         return customer;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void confirmPayment(Payment payment) {
+        this.payment = payment;
+        this.status = OrderStatus.PAID;
     }
 
     @Override
