@@ -31,6 +31,10 @@ public final class Money implements Serializable {
         return new Money(this.amount - other.amount);
     }
 
+    public Money multiply(int multiplier) {
+        return new Money(this.amount * multiplier);
+    }
+
     public boolean isPositive() {
         return this.amount >= 0;
     }
