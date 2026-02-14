@@ -43,6 +43,10 @@ public final class Money implements Serializable {
         return this.amount >= other.amount;
     }
 
+    public BigDecimal toBigDecimal() {
+        return BigDecimal.valueOf(amount, 2);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
