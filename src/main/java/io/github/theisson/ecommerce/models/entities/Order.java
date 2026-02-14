@@ -4,7 +4,7 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import io.github.theisson.ecommerce.models.*;
+import io.github.theisson.ecommerce.models.types.*;
 import jakarta.persistence.*;
 
 @Entity

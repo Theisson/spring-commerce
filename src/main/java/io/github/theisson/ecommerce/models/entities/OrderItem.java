@@ -1,6 +1,6 @@
 package io.github.theisson.ecommerce.models.entities;
 
-import io.github.theisson.ecommerce.models.*;
+import io.github.theisson.ecommerce.models.types.*;
 import jakarta.persistence.*;
 
 @Entity
@@ -19,6 +19,7 @@ public class OrderItem {
     protected OrderItem() {}
 
     public OrderItem(Order order, Product product, Integer quantity, Money price) {
+        if (quantity == null || quantity <= 0) throw new IllegalArgumentException("Quantidade inválida.");
         this.id.setOrder(order);
         this.id.setProduct(product);
         this.quantity = quantity;

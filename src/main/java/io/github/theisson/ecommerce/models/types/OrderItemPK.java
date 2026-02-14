@@ -1,4 +1,4 @@
-package io.github.theisson.ecommerce.models;
+package io.github.theisson.ecommerce.models.types;
 
 import java.io.Serializable;
 import java.util.Objects;

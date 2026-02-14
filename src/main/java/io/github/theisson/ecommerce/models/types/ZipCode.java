@@ -1,4 +1,4 @@
-package io.github.theisson.ecommerce.models;
+package io.github.theisson.ecommerce.models.types;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

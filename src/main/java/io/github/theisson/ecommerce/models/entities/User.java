@@ -1,6 +1,6 @@
 package io.github.theisson.ecommerce.models.entities;
 
-import io.github.theisson.ecommerce.models.*;
+import io.github.theisson.ecommerce.models.types.*;
 import jakarta.persistence.*;
 
 @Entity
