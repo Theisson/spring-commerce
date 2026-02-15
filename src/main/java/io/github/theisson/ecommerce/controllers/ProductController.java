@@ -7,20 +7,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.github.theisson.ecommerce.dto.ProductDTO;
-import io.github.theisson.ecommerce.services.application.ProductCatalogService;
+import io.github.theisson.ecommerce.services.application.ListProducts;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    private final ProductCatalogService productCatalogService;
+    private final ListProducts listProducts;
 
-    public ProductController(ProductCatalogService productCatalogService) {
-        this.productCatalogService = productCatalogService;
+    public ProductController(ListProducts listProducts) {
+        this.listProducts = listProducts;
     }
 
     @GetMapping
     public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
-        Page<ProductDTO> list = productCatalogService.getCatalog(pageable);
+        Page<ProductDTO> list = listProducts.execute(pageable);
 
         return ResponseEntity.ok(list);
     }
