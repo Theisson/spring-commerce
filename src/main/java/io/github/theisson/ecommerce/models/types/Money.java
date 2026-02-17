@@ -12,7 +12,7 @@ public final class Money implements Serializable {
     }
 
     public Money(BigDecimal amount) {
-        this.amount = amount.multiply(new BigDecimal("100")).longValueExact();
+        this.amount = amount.movePointRight(2).longValueExact();
     }
 
     public static Money zero() {

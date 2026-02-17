@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import io.github.theisson.ecommerce.dto.ProductDTO;
+import io.github.theisson.ecommerce.dto.ProductResponseDTO;
 import io.github.theisson.ecommerce.models.entities.Product;
 import io.github.theisson.ecommerce.repositories.ProductRepository;
 
@@ -17,9 +17,9 @@ public class ListProducts {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> execute(Pageable pageable) {
+    public Page<ProductResponseDTO> execute(Pageable pageable) {
         Page<Product> result = productRepository.findAll(pageable);
 
-        return result.map(ProductDTO::new);
+        return result.map(ProductResponseDTO::new);
     }
 }

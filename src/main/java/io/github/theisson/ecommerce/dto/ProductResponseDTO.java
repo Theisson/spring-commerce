@@ -5,7 +5,7 @@ import java.util.List;
 import io.github.theisson.ecommerce.models.entities.Category;
 import io.github.theisson.ecommerce.models.entities.Product;
 
-public record ProductDTO(
+public record ProductResponseDTO(
     Long id,
     String name,
     String description,
@@ -14,7 +14,7 @@ public record ProductDTO(
     List<String> categories
 ) {
     
-    public ProductDTO(Product entity) {
+    public ProductResponseDTO(Product entity) {
         this(
             entity.getId(),
             entity.getName(),
