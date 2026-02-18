@@ -22,11 +22,10 @@ public class CreateProduct {
 
     @Transactional
     public ProductResponseDTO execute(ProductRequestDTO dto) {
-        Money price = new Money(dto.price());
         Product entity = new Product(
             dto.name(),
             dto.description(),
-            price,
+            new Money(dto.price()),
             dto.imageUrl()
         );
 

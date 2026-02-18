@@ -11,6 +11,7 @@ import io.github.theisson.ecommerce.dto.ProductResponseDTO;
 import io.github.theisson.ecommerce.services.application.CreateProduct;
 import io.github.theisson.ecommerce.services.application.GetProduct;
 import io.github.theisson.ecommerce.services.application.ListProducts;
+import io.github.theisson.ecommerce.services.application.UpdateProduct;
 import jakarta.validation.Valid;
 
 @RestController
@@ -19,11 +20,13 @@ public class ProductController {
     private final ListProducts listProducts;
     private final GetProduct getProduct;
     private final CreateProduct createProduct;
+    private final UpdateProduct updateProduct;
 
-    public ProductController(ListProducts listProducts, GetProduct getProduct, CreateProduct createProduct) {
+    public ProductController(ListProducts listProducts, GetProduct getProduct, CreateProduct createProduct, UpdateProduct updateProduct) {
         this.listProducts = listProducts;
         this.getProduct = getProduct;
         this.createProduct = createProduct;
+        this.updateProduct = updateProduct;
     }
 
     @GetMapping
@@ -50,5 +53,12 @@ public class ProductController {
                 .toUri();
 
         return ResponseEntity.created(uri).body(newProduct);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResponseDTO> update(@PathVariable Long id, @Valid @RequestBody ProductRequestDTO dto) {
+        ProductResponseDTO updatedProduct = updateProduct.execute(id, dto);
+
+        return ResponseEntity.ok(updatedProduct);
     }
 }

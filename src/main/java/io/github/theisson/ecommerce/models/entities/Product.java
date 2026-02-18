@@ -51,6 +51,17 @@ public class Product {
         this.categories.remove(category);
     }
 
+    public void clearCategories() {
+        this.categories.clear();
+    }
+
+    public void updateData(String name, String description, Money price, String imageUrl) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
+
     public Long getId() {
         return id;
     }
