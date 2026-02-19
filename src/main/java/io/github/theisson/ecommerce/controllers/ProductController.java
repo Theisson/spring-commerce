@@ -9,6 +9,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.github.theisson.ecommerce.dto.ProductRequestDTO;
 import io.github.theisson.ecommerce.dto.ProductResponseDTO;
 import io.github.theisson.ecommerce.services.application.CreateProduct;
+import io.github.theisson.ecommerce.services.application.DeleteProduct;
 import io.github.theisson.ecommerce.services.application.GetProduct;
 import io.github.theisson.ecommerce.services.application.ListProducts;
 import io.github.theisson.ecommerce.services.application.UpdateProduct;
@@ -21,12 +22,20 @@ public class ProductController {
     private final GetProduct getProduct;
     private final CreateProduct createProduct;
     private final UpdateProduct updateProduct;
+    private final DeleteProduct deleteProduct;
 
-    public ProductController(ListProducts listProducts, GetProduct getProduct, CreateProduct createProduct, UpdateProduct updateProduct) {
+    public ProductController(
+        ListProducts listProducts, 
+        GetProduct getProduct, 
+        CreateProduct createProduct, 
+        UpdateProduct updateProduct, 
+        DeleteProduct deleteProduct
+    ) {
         this.listProducts = listProducts;
         this.getProduct = getProduct;
         this.createProduct = createProduct;
         this.updateProduct = updateProduct;
+        this.deleteProduct = deleteProduct;
     }
 
     @GetMapping
@@ -60,5 +69,12 @@ public class ProductController {
         ProductResponseDTO updatedProduct = updateProduct.execute(id, dto);
 
         return ResponseEntity.ok(updatedProduct);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        deleteProduct.execute(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
