@@ -36,6 +36,10 @@ public final class Money implements Serializable {
     }
 
     public boolean isPositive() {
+        return this.amount > 0;
+    }
+
+    public boolean isNonNegative() {
         return this.amount >= 0;
     }
 

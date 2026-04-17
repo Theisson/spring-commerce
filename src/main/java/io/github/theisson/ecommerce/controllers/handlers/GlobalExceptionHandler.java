@@ -2,7 +2,6 @@ package io.github.theisson.ecommerce.controllers.handlers;
 
 import java.time.Instant;
 import java.util.ArrayList;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,7 @@ import io.github.theisson.ecommerce.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
-public class ResourceExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<StandardError> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request) {

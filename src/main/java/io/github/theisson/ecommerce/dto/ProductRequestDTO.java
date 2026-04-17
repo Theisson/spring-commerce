@@ -3,7 +3,6 @@ package io.github.theisson.ecommerce.dto;
 import java.math.BigDecimal;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import io.github.theisson.ecommerce.models.entities.Category;
 import io.github.theisson.ecommerce.models.entities.Product;
 import jakarta.validation.constraints.*;
