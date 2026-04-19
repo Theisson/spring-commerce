@@ -79,3 +79,4 @@ Tipos que consistem em um conjunto fixo de constantes.
     *   `SHIPPED` (Enviado)
     *   `DELIVERED` (Entregue)
     *   `CANCELED` (Cancelado)
+    *   `RETURNED` (Devolvido)
