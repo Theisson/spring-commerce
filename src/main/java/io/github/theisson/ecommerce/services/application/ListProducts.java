@@ -17,8 +17,8 @@ public class ListProducts {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductResponseDTO> execute(Pageable pageable) {
-        Page<Product> result = productRepository.findAll(pageable);
+    public Page<ProductResponseDTO> execute(String name, Long categoryId, Pageable pageable) {
+        Page<Product> result = productRepository.findByFilters(name, categoryId, pageable);
 
         return result.map(ProductResponseDTO::new);
     }

@@ -25,10 +25,10 @@ public class ProductController {
     private final DeleteProduct deleteProduct;
 
     public ProductController(
-        ListProducts listProducts, 
-        GetProduct getProduct, 
-        CreateProduct createProduct, 
-        UpdateProduct updateProduct, 
+        ListProducts listProducts,
+        GetProduct getProduct,
+        CreateProduct createProduct,
+        UpdateProduct updateProduct,
         DeleteProduct deleteProduct
     ) {
         this.listProducts = listProducts;
@@ -39,9 +39,13 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductResponseDTO>> findAll(Pageable pageable) {
-        Page<ProductResponseDTO> list = listProducts.execute(pageable);
-
+    public ResponseEntity<Page<ProductResponseDTO>> findAll(
+        @RequestParam(required = false) String name,
+        @RequestParam(required = false) Long categoryId,
+        Pageable pageable
+    ) {
+        Page<ProductResponseDTO> list = listProducts.execute(name, categoryId, pageable);
+        
         return ResponseEntity.ok(list);
     }
 
@@ -74,7 +78,7 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         deleteProduct.execute(id);
-
+        
         return ResponseEntity.noContent().build();
     }
 }
