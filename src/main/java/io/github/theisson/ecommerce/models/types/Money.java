@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public final class Money implements Serializable {
+    
     private final long amount;
 
     public Money(long amount) {

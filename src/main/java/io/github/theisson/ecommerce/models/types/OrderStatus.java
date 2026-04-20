@@ -1,6 +1,7 @@
 package io.github.theisson.ecommerce.models.types;
 
 public enum OrderStatus {
+    
     WAITING_PAYMENT("Aguardando Pagamento"),
     PAID("Pago"),
     SHIPPED("Enviado"),

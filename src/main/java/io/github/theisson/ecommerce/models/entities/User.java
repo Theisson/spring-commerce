@@ -17,15 +17,20 @@ public class User {
     @Embedded
     private Email email;
 
-    @Embedded
-    private Password password;
+    @Column(name = "password", nullable = false, length = 255)
+    private String password;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     protected User() {}
 
-    public User(Username username, Email email, Password password) {
+    public User(Username username, Email email, String password, UserRole role) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public Long getId() {
@@ -41,6 +46,10 @@ public class User {
     }
 
     public String getPassword() {
-        return password.getValue();
-    }    
+        return password;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
 }
