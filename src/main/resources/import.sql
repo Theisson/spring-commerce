@@ -72,8 +72,8 @@ INSERT INTO product_category (product_id, category_id) VALUES (29, 5);
 INSERT INTO product_category (product_id, category_id) VALUES (30, 2);
 
 -- Passwords são placeholders. Login não funcionará até US-USR-02 (Autenticação) ser implementado.
-INSERT INTO users (username, email, password, role) VALUES ('maria', 'maria@gmail.com', 'PLACEHOLDER', 'CUSTOMER');
-INSERT INTO users (username, email, password, role) VALUES ('alex', 'alex@gmail.com', 'PLACEHOLDER', 'CUSTOMER');
+INSERT INTO users (username, email, password, role, auth_provider) VALUES ('maria', 'maria@gmail.com', 'PLACEHOLDER', 'CUSTOMER', 'LOCAL');
+INSERT INTO users (username, email, password, role, auth_provider) VALUES ('alex', 'alex@gmail.com', 'PLACEHOLDER', 'CUSTOMER', 'LOCAL');
 
 INSERT INTO customers (user_id, cpf, phone_number, birth_date) VALUES (1, '12345678901', '988888888', '1998-07-23');
 INSERT INTO customers (user_id, cpf, phone_number, birth_date) VALUES (2, '98765432109', '977777777', '1995-10-15');

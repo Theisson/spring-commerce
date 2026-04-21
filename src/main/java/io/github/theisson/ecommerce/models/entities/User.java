@@ -24,13 +24,18 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @Column(name = "auth_provider", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private AuthProvider authProvider;
+
     protected User() {}
 
-    public User(Username username, Email email, String password, UserRole role) {
+    public User(Username username, Email email, String password, UserRole role, AuthProvider authProvider) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.authProvider = authProvider;
     }
 
     public Long getId() {
@@ -51,5 +56,9 @@ public class User {
 
     public UserRole getRole() {
         return role;
+    }
+
+    public AuthProvider getAuthProvider() {
+        return authProvider;
     }
 }

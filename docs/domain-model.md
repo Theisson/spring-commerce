@@ -53,8 +53,8 @@ Objetos que possuem identidade única (um `Id`) ao longo do tempo.
 
 | Entidade | Descrição | Atributos Principais | Justificativa das Multiplicidades |
 | :--- | :--- | :--- | :--- |
-| **User** | Representa o usuário de acesso ao sistema (autenticação). | `id`: Long<br>`username`: Username (VO)<br>`email`: Email (VO)<br>`password`: Password (VO) | (Sem multiplicidade direta originada daqui, apenas alvo de `Customer`). |
-| **Customer** | Representa um cliente da loja, os dados físicos e de entrega. | `id`: Long<br>`cpf`: Cpf (VO)<br>`phoneNumber`: PhoneNumber (VO)<br>`birthDate`: LocalDate | **1 para 1 (com User)**: Cada cliente possui exatamente um login de acesso ao sistema.<br>**1 para N (com Address)**: Um cliente pode ter vários endereços (ex: casa, trabalho).<br>**1 para 1 (com Wallet)**: Cada cliente é dono de apenas uma carteira digital.<br>**1 para N (com Order)**: Um mesmo cliente pode fazer dezenas de pedidos ao longo do tempo. |
+| **User** | Representa o usuário de acesso ao sistema (autenticação e autorização). É a camada de identidade — o único objeto que o sistema de segurança conhece diretamente. | `id`: Long<br>`username`: Username (VO)<br>`email`: Email (VO)<br>`password`: String *(nullable — ausente para usuários OAuth)*<br>`role`: UserRole (Enum)<br>`authProvider`: AuthProvider (Enum) | (Sem multiplicidade direta originada daqui, apenas alvo de `Customer`). |
+| **Customer** | Representa o perfil comercial de um cliente da loja. Criado de forma **progressiva**, apenas quando o usuário completa seus dados pessoais. Enquanto o `User` é a identidade, o `Customer` é quem compra, paga e recebe produtos. | `id`: Long<br>`cpf`: Cpf (VO)<br>`phoneNumber`: PhoneNumber (VO)<br>`birthDate`: LocalDate | **1 para 1 (com User)**: Cada cliente possui exatamente um login de acesso ao sistema.<br>**1 para N (com Address)**: Um cliente pode ter vários endereços (ex: casa, trabalho).<br>**1 para 1 (com Wallet)**: Cada cliente é dono de apenas uma carteira digital.<br>**1 para N (com Order)**: Um mesmo cliente pode fazer dezenas de pedidos ao longo do tempo. |
 | **Wallet** | Representa a carteira digital do cliente para armazenar saldo. | `id`: Long<br>`balance`: Money (VO) | **1 para 1 (com Customer)**: Uma carteira digital pertence única e exclusivamente a um cliente. |
 | **Product** | Representa o catálogo de produtos disponíveis para venda. | `id`: Long<br>`name`: String<br>`description`: String<br>`price`: Money (VO)<br>`imageUrl`: String | **N para N (com Category)**: Um produto (ex: "Smartphone") pode estar em várias categorias ("Eletrônicos", "Promoções"), e uma categoria possui vários produtos. |
 | **Category** | Representa uma categoria que agrupa produtos. | `id`: Long<br>`name`: String<br>`description`: String | **N para N (com Product)**: Uma mesma categoria agrupa e organiza múltiplos produtos. |
@@ -68,7 +68,7 @@ Objetos caracterizados por seus atributos (imutáveis) sem uma identidade exclus
 *   **Money**: Centraliza regras de negócio sobre dinheiro (usando `long` para evitar erros de ponto flutuante). **Operações**: `add()`, `subtract()`, `multiply()`, `isPositive()`. 
 *   **Address**: Componente embutido (`@Embeddable`) que agrupa estado, cidade, rua, número, etc.
 *   **OrderItemPK**: Classe auxiliar (`@Embeddable`) usada como chave primária composta para identificar unicamente um `OrderItem`. Ela não é a classe associativa em si, mas sim a **identidade (ID técnico)** da classe associativa `OrderItem`. Ela encapsula as referências para o `Order` e o `Product` para o banco de dados (JPA/Hibernate), garantindo que um mesmo produto não seja inserido duas vezes como itens separados no mesmo pedido.
-*   **Encapsuladores Primitivos (Tiny Types)**: `Username`, `Email`, `Password`, `Cpf`, `PhoneNumber`, `ZipCode`. Garantem regras de validação intrínsecas ao próprio formato dos dados.
+*   **Encapsuladores Primitivos (Tiny Types)**: `Username`, `Email`, `Cpf`, `PhoneNumber`, `ZipCode`. Garantem regras de validação intrínsecas ao próprio formato dos dados.
 
 ### 2.3 Enumeradores (Enums)
 Tipos que consistem em um conjunto fixo de constantes.
@@ -80,3 +80,33 @@ Tipos que consistem em um conjunto fixo de constantes.
     *   `DELIVERED` (Entregue)
     *   `CANCELED` (Cancelado)
     *   `RETURNED` (Devolvido)
+
+*   **UserRole**: Representa o perfil de autorização do usuário no sistema.
+    *   `CUSTOMER` (Cliente comum)
+    *   `ADMIN` (Administrador com acesso privilegiado)
+
+*   **AuthProvider**: Representa a origem da autenticação do usuário. Determina se o sistema é responsável pela senha ou se ela é delegada a um provedor externo.
+    *   `LOCAL` — Cadastro próprio. Senha obrigatória, hasheada com Argon2id + Pepper antes da persistência.
+    *   `GOOGLE` — Autenticação via Google OAuth2. O campo `password` em `User` é `null`; o Google é responsável por autenticar o usuário.
+    *   *(Enum extensível: novos provedores como `GITHUB`, `FACEBOOK` podem ser adicionados sem mudança estrutural.)*
+
+### 2.4 Vinculação de Contas (Account Linking)
+
+Um usuário autenticado via provedor externo pode, futuramente, associar uma senha local à sua conta. O sistema suporta dois modelos:
+
+**Troca de provedor** (`authProvider` muda para `LOCAL`):
+O usuário define uma senha. O `authProvider` é atualizado para `LOCAL` e a conta passa a aceitar login exclusivamente por e-mail/senha, desassociando-se do provedor externo. É o modelo mais simples — `authProvider` sempre reflete **a única forma de login ativa**.
+
+**Conta vinculada** (múltiplos provedores simultâneos):
+O usuário mantém login via Google **e** ganha a opção de entrar com senha local. Para suportar isso, um único campo `authProvider` não é suficiente — é necessária uma tabela auxiliar de vínculos:
+
+```
+user_oauth_providers
+  user_id      FK → users
+  provider     (GOOGLE, GITHUB, ...)
+  provider_id  (ID do usuário no provedor externo)
+```
+
+Cada linha representa um vínculo ativo. Um mesmo `User` pode ter N linhas — uma por provedor. A senha local coexiste com os vínculos OAuth.
+
+> **Decisão de escopo atual**: o projeto implementa **Troca de provedor**. Conta vinculada fica registrada aqui como arquitetura futura, caso o escopo evolua.

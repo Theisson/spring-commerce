@@ -9,6 +9,13 @@ Identificamos três perfis principais que interagem com o sistema:
 *   **Cliente (Customer)**: Usuário autenticado que gerencia sua conta, endereços, carteira digital e realiza pedidos.
 *   **Administrador (Admin)**: Usuário autenticado com privilégios elevados, responsável pela gestão do catálogo de produtos, categorias e pelo andamento logístico dos pedidos.
 
+### 2.1. Modelo de Identidade
+
+O sistema adota uma separação clara entre **identidade** e **perfil comercial**:
+
+*   **`User` (Identidade)**: Camada de autenticação e autorização. Criada no momento do registro ou do primeiro login social. É o único objeto que o sistema de segurança conhece.
+*   **`Customer` (Perfil Comercial)**: Camada de negócio, criada de forma **progressiva** — apenas quando o usuário completa seus dados pessoais (CPF, telefone, data de nascimento). Uma `Wallet` é criada automaticamente junto ao `Customer`.
+
 ## 3. Requisitos Funcionais (User Stories)
 
 As histórias de usuário foram agrupadas de acordo com os principais módulos de negócio do sistema.
@@ -25,10 +32,10 @@ As histórias de usuário foram agrupadas de acordo com os principais módulos d
 ### 3.2. Módulo de Gestão de Usuários e Clientes
 | Código | Objetivo | User Story | Prioridade |
 |---|---|---|---|
-| US-USR-01 | Cadastro de Cliente | Como Visitante, quero me cadastrar no sistema informando meus dados pessoais (nome de usuário, e-mail, senha, CPF, data de nascimento, telefone) para que seja criada minha conta de cliente (e respectiva carteira digital). | Essencial |
+| US-USR-01 | Registro de Conta | Como Visitante, quero criar uma conta no sistema informando apenas meus dados de identidade (nome de usuário, e-mail e senha) — ou autenticando via um provedor externo (ex: Google) — para que meu acesso seja estabelecido sem burocracia. Nenhum dado comercial (CPF, telefone, data de nascimento) é exigido neste momento. | Essencial |
 | US-USR-02 | Autenticação e Login | Como Cliente ou Administrador, quero fazer login no sistema usando minhas credenciais (e-mail ou nome de usuário e senha) para acessar funcionalidades restritas e proteger minha conta. | Essencial |
 | US-USR-03 | Gerenciar Endereços de Entrega | Como Cliente, quero poder adicionar, editar ou remover endereços de entrega (incluindo validação de CEP) no meu perfil, para poder escolher onde meus pedidos serão entregues. | Essencial |
-| US-USR-04 | Visualizar Perfil | Como Cliente, quero visualizar e poder editar meus dados cadastrais básicos. | Importante |
+| US-USR-04 | Gerenciar Perfil | Como Cliente, quero poder visualizar e editar meus dados de identidade (nome de usuário, e-mail), e também completar meu perfil comercial (CPF, telefone, data de nascimento) quando necessário. Ao completar o perfil comercial pela primeira vez, minha Carteira Digital é criada automaticamente. O preenchimento do perfil comercial é obrigatório antes da realização do primeiro checkout. | Importante |
 
 ### 3.3. Módulo de Carteira Digital (Wallet)
 | Código | Objetivo | User Story | Prioridade |
@@ -55,8 +62,8 @@ As histórias de usuário foram agrupadas de acordo com os principais módulos d
 | Código | Objetivo | Descrição | Prioridade |
 |---|---|---|---|
 | **RNF-01** | Precisão Financeira Rigorosa | Todos os cálculos, atributos de preço e saldo devem utilizar obrigatoriamente o Value Object `Money` (baseado em números inteiros como `long` ou `BigDecimal`) para evitar anomalias de arredondamento de ponto flutuante. | Essencial |
-| **RNF-02** | Integridade de Domínio (Tiny Types) | Dados formatados e sensíveis (`Cpf`, `Email`, `ZipCode`, `PhoneNumber`, `Username`) devem garantir suas próprias regras de validação intrínseca via Value Objects antes de qualquer tentativa de persistência no banco de dados. A senha não é representada como Value Object: sua validação de formato ocorre no `RequestDTO` (Bean Validation) e o hashing Argon2id + Pepper é aplicado no Use Case antes da persistência, sendo armazenada como `String` diretamente na entidade `User`. | Essencial |
-| **RNF-03** | Segurança e Controle de Acesso | O sistema deve aplicar hashing Argon2id + Pepper na senha do usuário dentro do Use Case de cadastro (`RegisterCustomer`), antes de qualquer persistência. O Pepper é um segredo global da aplicação armazenado fora do banco (variável de ambiente). O sistema deve também garantir que rotas de administração não possam ser acessadas por perfis comuns de Cliente, utilizando mecanismos de segurança do framework. | Essencial |
+| **RNF-02** | Integridade de Domínio (Tiny Types) | Dados formatados e sensíveis (`Cpf`, `Email`, `ZipCode`, `PhoneNumber`, `Username`) devem garantir suas próprias regras de validação intrínseca via Value Objects antes de qualquer tentativa de persistência no banco de dados. A senha não é representada como Value Object: sua validação de formato ocorre no `RequestDTO` (Bean Validation) e o hashing Argon2id + Pepper é aplicado no Use Case antes da persistência, sendo armazenada como `String` diretamente na entidade `User`. O campo `password` é **nullable**: é obrigatório apenas quando `authProvider = LOCAL` e deve ser nulo para usuários autenticados via provedor externo. Essa regra é garantida pelo Use Case de registro, não por constraint de banco. | Essencial |
+| **RNF-03** | Segurança e Controle de Acesso | O sistema deve aplicar hashing Argon2id + Pepper na senha do usuário dentro do Use Case de registro (`RegisterUser`), antes de qualquer persistência. Essa etapa só ocorre quando `authProvider = LOCAL`; usuários de provedores externos não possuem senha armazenada. O Pepper é um segredo global da aplicação armazenado fora do banco (variável de ambiente). O sistema deve também garantir que rotas de administração não possam ser acessadas por perfis comuns de Cliente, utilizando mecanismos de segurança do framework. | Essencial |
 | **RNF-04** | Consistência Associativa | A relação entre Pedidos e Produtos (`OrderItem`) deve usar obrigatoriamente a chave composta `OrderItemPK` para evitar que um mesmo produto seja duplicado no carrinho sem que a quantidade seja unificada. | Essencial |
 | **RNF-05** | Desempenho e Paginação | As listagens de produtos no catálogo e histórico de pedidos devem implementar paginação no nível de banco de dados para evitar sobrecarga de memória e lentidão nas respostas da API (ex: usando `Pageable`). | Importante |
 | **RNF-06** | Padronização de Exceções | A API REST deve ter um tratamento global de exceções (ex: `@ControllerAdvice`), retornando objetos de erro padronizados (com status, mensagem amigável e timestamp) para facilitar o consumo pelo frontend. | Importante |
