@@ -17,7 +17,7 @@ public class GetProduct {
 
     @Transactional(readOnly = true)
     public ProductResponseDTO execute(Long id) {
-        Product entity = productRepository.findById(id)
+        Product entity = productRepository.findActiveById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com id: " + id));
 
         return new ProductResponseDTO(entity);

@@ -1,5 +1,7 @@
 package io.github.theisson.ecommerce.models.entities;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,6 +27,9 @@ public class Product {
 
     @Column(name = "image_url")
     private String imageUrl;
+
+    @Column(name = "deleted_at")
+    private Instant deletedAt;
 
     @ManyToMany
     @JoinTable(
@@ -62,6 +67,10 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
+    public void softDelete() {
+        this.deletedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+    }
+
     public Long getId() {
         return id;
     }
@@ -80,6 +89,10 @@ public class Product {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public Instant getDeletedAt() {
+        return deletedAt;
     }
 
     public Set<Category> getCategories() {

@@ -19,7 +19,7 @@ Este documento mapeia cada requisito do `requirements.md` ao seu status de imple
 | US-CAT-01 | Visualizar Catálogo | `Concluído` | `ListProducts` | — |
 | US-CAT-02 | Detalhes do Produto | `Concluído` | `GetProduct` | — |
 | US-CAT-03 | Buscar e Filtrar Produtos | `Concluído` | `ListProducts` | — |
-| US-CAT-04 | Gerenciar Produtos (CRUD) | `Parcial` | `CreateProduct`, `UpdateProduct`, `DeleteProduct`, `GetProduct` | `stockQuantity` não implementado (RNF-15 pendente); soft delete (`deletedAt`) não implementado (RNF-08 pendente) |
+| US-CAT-04 | Gerenciar Produtos (CRUD) | `Parcial` | `CreateProduct`, `UpdateProduct`, `DeleteProduct`, `GetProduct` | `stockQuantity` não implementado (RNF-15 pendente) |
 | US-CAT-05 | Gerenciar Categorias | `Concluído` | `CreateCategory`, `UpdateCategory`, `DeleteCategory`, `GetCategory`, `ListCategories` | — |
 
 ### 3.2 Módulo de Usuários e Clientes
@@ -70,7 +70,7 @@ Este documento mapeia cada requisito do `requirements.md` ao seu status de imple
 | RNF-05 | Paginação | `Concluído` | `ListProducts.java`, `ProductRepository.java` | — |
 | RNF-06 | Padronização de Exceções | `Concluído` | `controllers/handlers/GlobalExceptionHandler.java`, `dto/error/` | — |
 | RNF-07 | Autenticação Stateless (Dual-Token JWT) | `Pendente` | — | Access Token JWT + Refresh Token opaco hasheado |
-| RNF-08 | Integridade Referencial em Deleções | `Parcial` | `DeleteProduct.java` (protege via `DataIntegrityViolationException`) | Soft delete (`deletedAt`) ainda não implementado em `Product` |
+| RNF-08 | Integridade Referencial em Deleções | `Concluído` | `Product.java` (`softDelete()`), `ProductRepository.java` (`findActiveById`, `hasOrders`, `findByFilters`), `DeleteProduct.java` | — |
 | RNF-09 | Documentação OpenAPI/Swagger | `Pendente` | — | `springdoc-openapi` — baixa prioridade |
 | RNF-10 | Multi-Ambiente (H2 / PostgreSQL) | `Parcial` | `application-test.properties` (H2 em memória) | Perfil `prod` com PostgreSQL pendente — depende de RNF-12 |
 | RNF-11 | Cache com Redis | `Pendente` | — | Baixa prioridade |
