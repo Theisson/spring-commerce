@@ -19,7 +19,7 @@ Este documento mapeia cada requisito do `requirements.md` ao seu status de imple
 | US-CAT-01 | Visualizar Catálogo | `Concluído` | `ListProducts` | — |
 | US-CAT-02 | Detalhes do Produto | `Concluído` | `GetProduct` | — |
 | US-CAT-03 | Buscar e Filtrar Produtos | `Concluído` | `ListProducts` | — |
-| US-CAT-04 | Gerenciar Produtos (CRUD) | `Parcial` | `CreateProduct`, `UpdateProduct`, `DeleteProduct`, `GetProduct` | `stockQuantity` não implementado (RNF-15 pendente) |
+| US-CAT-04 | Gerenciar Produtos (CRUD) | `Concluído` | `CreateProduct`, `UpdateProduct`, `DeleteProduct`, `GetProduct` | — |
 | US-CAT-05 | Gerenciar Categorias | `Concluído` | `CreateCategory`, `UpdateCategory`, `DeleteCategory`, `GetCategory`, `ListCategories` | — |
 
 ### 3.2 Módulo de Usuários e Clientes
@@ -43,7 +43,7 @@ Este documento mapeia cada requisito do `requirements.md` ao seu status de imple
 | Código | Objetivo | Status | Use Cases | Pendências |
 |---|---|---|---|---|
 | US-ORD-01 | Montar Carrinho | `Pendente` | — | Depende de US-USR-02 |
-| US-ORD-02 | Finalizar Compra (Checkout) | `Pendente` | — | Depende de RNF-15 (estoque) |
+| US-ORD-02 | Finalizar Compra (Checkout) | `Pendente` | — | Depende de US-USR-02 (autenticação). O Use Case de checkout deve: (1) verificar `stockQuantity` antes de confirmar; (2) decrementar o estoque atomicamente; (3) capturar `OptimisticLockException` e relançar como `InsufficientStockException` para tratar race conditions. |
 | US-ORD-03 | Realizar Pagamento | `Pendente` | — | — |
 | US-ORD-04 | Histórico de Pedidos | `Pendente` | — | Depende de US-USR-02 |
 | US-ORD-05 | Atualização Automática de Status | `Pendente` | — | Depende de US-ORD-03 e RNF-16 |
@@ -77,5 +77,5 @@ Este documento mapeia cada requisito do `requirements.md` ao seu status de imple
 | RNF-12 | Docker Compose | `Pendente` | — | Baixa prioridade |
 | RNF-13 | E-mail (Resend + Mailpit) | `Pendente` | — | Contrato `integrations/EmailNotificationPort` a ser criado |
 | RNF-14 | Campos de Auditoria | `Pendente` | — | `@EnableJpaAuditing` em `User`, `Customer`, `Product`, `Order` |
-| RNF-15 | Controle de Estoque | `Pendente` | — | `stockQuantity` + `@Version` em `Product`; validação no checkout |
+| RNF-15 | Controle de Estoque | `Parcial` | `models/entities/Product.java` (`stockQuantity`, `@Version`) | Validação e decremento de estoque no checkout pendentes — dependem de US-ORD-02. Criar `exceptions/InsufficientStockException` para ser lançada quando `stockQuantity` insuficiente ou quando `OptimisticLockException` for capturada (race condition no checkout). |
 | RNF-16 | Gateway de Pagamento Stripe | `Deferido` | — | Decisão de arquitetura pendente; `PaymentGatewayPort` reservado em `integrations/` |

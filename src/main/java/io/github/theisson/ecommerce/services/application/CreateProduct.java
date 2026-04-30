@@ -26,7 +26,8 @@ public class CreateProduct {
             dto.name(),
             dto.description(),
             new Money(dto.price()),
-            dto.imageUrl()
+            dto.imageUrl(),
+            dto.stockQuantity()
         );
 
         for (Long categoryId : dto.categories()) {

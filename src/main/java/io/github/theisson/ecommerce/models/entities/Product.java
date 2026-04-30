@@ -28,6 +28,12 @@ public class Product {
     @Column(name = "image_url")
     private String imageUrl;
 
+    @Column(name = "stock_quantity", nullable = false)
+    private Integer stockQuantity;
+
+    @Version
+    private Long version;
+
     @Column(name = "deleted_at")
     private Instant deletedAt;
 
@@ -41,11 +47,12 @@ public class Product {
 
     protected Product() {}
 
-    public Product(String name, String description, Money price, String imageUrl) {
+    public Product(String name, String description, Money price, String imageUrl, Integer stockQuantity) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.imageUrl = imageUrl;
+        this.stockQuantity = stockQuantity;
     }
 
     public void addCategory(Category category) {
@@ -60,11 +67,12 @@ public class Product {
         this.categories.clear();
     }
 
-    public void updateData(String name, String description, Money price, String imageUrl) {
+    public void updateData(String name, String description, Money price, String imageUrl, Integer stockQuantity) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.imageUrl = imageUrl;
+        this.stockQuantity = stockQuantity;
     }
 
     public void softDelete() {
@@ -89,6 +97,14 @@ public class Product {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public Integer getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public Long getVersion() {
+        return version;
     }
 
     public Instant getDeletedAt() {

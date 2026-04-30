@@ -11,6 +11,7 @@ public record ProductResponseDTO(
     String description,
     BigDecimal price,
     String imageUrl,
+    Integer stockQuantity,
     List<String> categories
 ) {
     
@@ -21,6 +22,7 @@ public record ProductResponseDTO(
             entity.getDescription(),
             entity.getPrice().toBigDecimal(),
             entity.getImageUrl(),
+            entity.getStockQuantity(),
             entity.getCategories().stream().map(Category::getName).sorted().toList()
         );
     }

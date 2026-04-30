@@ -31,7 +31,8 @@ public class UpdateProduct {
                 dto.name(),
                 dto.description(),
                 new Money(dto.price()),
-                dto.imageUrl()
+                dto.imageUrl(),
+                dto.stockQuantity()
             );
 
             entity.clearCategories();

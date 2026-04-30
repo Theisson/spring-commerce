@@ -23,6 +23,10 @@ public record ProductRequestDTO(
     @Size(max = 255, message = "URL da imagem deve ter no máximo 255 caracteres")
     String imageUrl,
 
+    @NotNull(message = "Campo requerido")
+    @PositiveOrZero(message = "O estoque não pode ser negativo")
+    Integer stockQuantity,
+
     @NotEmpty(message = "Deve possuir pelo menos uma categoria")
     Set<Long> categories
 ) {
@@ -32,6 +36,7 @@ public record ProductRequestDTO(
             entity.getDescription(),
             entity.getPrice().toBigDecimal(),
             entity.getImageUrl(),
+            entity.getStockQuantity(),
             entity.getCategories().stream().map(Category::getId).collect(Collectors.toSet())
         );
     }
