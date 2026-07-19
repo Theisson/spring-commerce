@@ -27,7 +27,7 @@ Este documento mapeia cada requisito do `requirements.md` ao seu status de imple
 | Código | Objetivo | Status | Use Cases | Pendências |
 |---|---|---|---|---|
 | US-USR-01 | Registro de Conta | `Concluído` | `RegisterUser` | — |
-| US-USR-02 | Autenticação e Login | `Pendente` | — | JWT dual-token (RNF-07) |
+| US-USR-02 | Autenticação e Login | `Concluído` | `LoginUser`, `RefreshTokens`, `LogoutUser`, `TokenProvider` | — |
 | US-USR-03 | Gerenciar Endereços | `Pendente` | — | — |
 | US-USR-04 | Gerenciar Perfil | `Pendente` | — | Depende de US-USR-02 |
 
@@ -65,11 +65,11 @@ Este documento mapeia cada requisito do `requirements.md` ao seu status de imple
 |---|---|---|---|---|
 | RNF-01 | Precisão Financeira | `Concluído` | `models/types/Money.java`, `converters/MoneyConverter.java` | — |
 | RNF-02 | Integridade de Domínio (Tiny Types) | `Concluído` | `models/types/` — `Username`, `Email`, `Cpf`, `PhoneNumber`, `ZipCode` e seus conversores em `converters/` | — |
-| RNF-03 | Segurança e Controle de Acesso | `Parcial` | `config/SecurityConfig.java`, `RegisterUser.java` | Autorização por role (rotas ADMIN) pendente — depende de RNF-07 |
+| RNF-03 | Segurança e Controle de Acesso | `Concluído` | `config/SecurityConfig.java`, `RegisterUser.java`, `LoginUser.java` | — |
 | RNF-04 | Consistência Associativa | `Concluído` | `models/types/OrderItemPK.java` | — |
 | RNF-05 | Paginação | `Concluído` | `ListProducts.java`, `ProductRepository.java` | — |
 | RNF-06 | Padronização de Exceções | `Concluído` | `controllers/handlers/GlobalExceptionHandler.java`, `dto/error/` | — |
-| RNF-07 | Autenticação Stateless (Dual-Token JWT) | `Pendente` | — | Access Token JWT + Refresh Token opaco hasheado |
+| RNF-07 | Autenticação Stateless (Dual-Token JWT) | `Concluído` | `config/SecurityConfig.java`, `services/security/TokenProvider.java`, `LoginUser.java`, `RefreshTokens.java`, `LogoutUser.java` | — |
 | RNF-08 | Integridade Referencial em Deleções | `Concluído` | `Product.java` (`softDelete()`), `ProductRepository.java` (`findActiveById`, `hasOrders`, `findByFilters`), `DeleteProduct.java` | — |
 | RNF-09 | Documentação OpenAPI/Swagger | `Pendente` | — | `springdoc-openapi` — baixa prioridade |
 | RNF-10 | Multi-Ambiente (H2 / PostgreSQL) | `Parcial` | `application-test.properties` (H2 em memória) | Perfil `prod` com PostgreSQL pendente — depende de RNF-12 |

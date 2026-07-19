@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import io.github.theisson.ecommerce.dto.error.StandardError;
 import io.github.theisson.ecommerce.dto.error.ValidationError;
 import io.github.theisson.ecommerce.exceptions.DatabaseException;
+import io.github.theisson.ecommerce.exceptions.InvalidCredentialsException;
+import io.github.theisson.ecommerce.exceptions.InvalidRefreshTokenException;
 import io.github.theisson.ecommerce.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -63,6 +65,32 @@ public class GlobalExceptionHandler {
             err.addError(f.getField(), f.getDefaultMessage());
         }
 
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<StandardError> invalidCredentials(InvalidCredentialsException e, HttpServletRequest request) {
+        HttpStatusCode status = HttpStatus.UNAUTHORIZED;
+        StandardError err = new StandardError(
+            Instant.now(),
+            status.value(),
+            "Unauthorized",
+            e.getMessage(),
+            request.getRequestURI()
+        );
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    public ResponseEntity<StandardError> invalidRefreshToken(InvalidRefreshTokenException e, HttpServletRequest request) {
+        HttpStatusCode status = HttpStatus.UNAUTHORIZED;
+        StandardError err = new StandardError(
+            Instant.now(),
+            status.value(),
+            "Unauthorized",
+            e.getMessage(),
+            request.getRequestURI()
+        );
         return ResponseEntity.status(status).body(err);
     }
 }

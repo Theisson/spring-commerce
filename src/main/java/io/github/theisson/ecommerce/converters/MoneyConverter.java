@@ -1,7 +1,6 @@
 package io.github.theisson.ecommerce.converters;
 
 import java.math.BigDecimal;
-
 import io.github.theisson.ecommerce.models.types.Money;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

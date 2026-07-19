@@ -1,7 +1,6 @@
 package io.github.theisson.ecommerce.dto;
 
 import java.time.LocalDate;
-
 import io.github.theisson.ecommerce.models.entities.Customer;
 
 public record CustomerResponseDTO(
