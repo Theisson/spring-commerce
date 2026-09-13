@@ -25,17 +25,9 @@ public class Payment {
         this.order = order;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Instant getMoment() {
-        return moment;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
+    public Long getId() { return id; }
+    public Instant getMoment() { return moment; }
+    public Order getOrder() { return order; }
 
     @Override
     public boolean equals(Object o) {

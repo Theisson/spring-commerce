@@ -32,7 +32,5 @@ public final class PhoneNumber {
         }
     }
 
-    public String getValue() {
-        return phoneNumber;
-    }
+    public String getValue() { return phoneNumber; }
 }

@@ -44,39 +44,22 @@ public class Order {
         this.status = OrderStatus.PAID;
     }
 
-    public Money getTotal() {
+    public Money calculateTotal() {
         Money sum = Money.zero();
 
         for (OrderItem item : items) {
-            sum = sum.add(item.getSubtotal());
+            sum = sum.add(item.calculateSubtotal());
         }
         
         return sum;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Instant getMoment() {
-        return moment;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public Set<OrderItem> getItems() {
-        return Collections.unmodifiableSet(items);
-    }
+    public Long getId() { return id; }
+    public Instant getMoment() { return moment; }
+    public OrderStatus getStatus() { return status; }
+    public Customer getCustomer() { return customer; }
+    public Payment getPayment() { return payment; }
+    public Set<OrderItem> getItems() { return Collections.unmodifiableSet(items); }
 
     @Override
     public boolean equals(Object o) {

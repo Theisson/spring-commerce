@@ -28,17 +28,9 @@ public class Category {
         this.description = description;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
+    public Long getId() { return id; }
+    public String getName() { return name; }
+    public String getDescription() { return description; }
 
     public void updateData(String name, String description) {
         this.name = name;

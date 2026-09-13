@@ -51,37 +51,14 @@ public class Customer {
         this.wallet = new Wallet(this);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public String getCpf() {
-        return cpf.getValue();
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber.getValue();
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public Set<Address> getAddresses() {
-        return Collections.unmodifiableSet(addresses);
-    }
-
-    public Wallet getWallet() {
-        return wallet;
-    }
-
-    public List<Order> getOrders() {
-        return Collections.unmodifiableList(orders);
-    }
+    public Long getId() { return id; }
+    public User getUser() { return user; }
+    public String getCpf() { return cpf.getValue(); }
+    public String getPhoneNumber() { return phoneNumber.getValue(); }
+    public LocalDate getBirthDate() { return birthDate; }
+    public Set<Address> getAddresses() { return Collections.unmodifiableSet(addresses); }
+    public Wallet getWallet() { return wallet; }
+    public List<Order> getOrders() { return Collections.unmodifiableList(orders); }
 
     public void addAddress(Address address) {
         if (address == null) {

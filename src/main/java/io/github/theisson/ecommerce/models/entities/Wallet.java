@@ -45,15 +45,7 @@ public class Wallet {
         this.balance = this.balance.subtract(amount);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public long getBalance() {
-        return balance.getAmount();
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
+    public Long getId() { return id; }
+    public Money getBalance() { return balance; }
+    public Customer getCustomer() { return customer; }
 }

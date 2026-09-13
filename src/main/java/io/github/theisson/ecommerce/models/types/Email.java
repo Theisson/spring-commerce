@@ -39,7 +39,5 @@ public final class Email {
         }
     }
 
-    public String getValue() {
-        return email;
-    }
+    public String getValue() { return email; }
 }

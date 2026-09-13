@@ -26,25 +26,14 @@ public class OrderItem {
         this.price = price;
     }
 
-    public Money getSubtotal() {
+    public Money calculateSubtotal() {
         return price.multiply(quantity);
     }
 
-    public Order getOrder() {
-        return id.getOrder();
-    }
-
-    public Product getProduct() {
-        return id.getProduct();
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public Money getPrice() {
-        return price;
-    }
+    public Order getOrder() { return id.getOrder(); }
+    public Product getProduct() { return id.getProduct(); }
+    public Integer getQuantity() { return quantity; }
+    public Money getPrice() { return price; }
 
     @Override
     public boolean equals(Object o) {

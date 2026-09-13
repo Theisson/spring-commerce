@@ -25,9 +25,7 @@ public final class ZipCode {
         }    
     }
 
-    public String getValue() {
-        return zipCode;
-    }
+    public String getValue() { return zipCode; }
 
     @Override
     public boolean equals(Object o) {

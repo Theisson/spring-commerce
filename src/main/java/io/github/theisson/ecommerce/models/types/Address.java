@@ -58,33 +58,13 @@ public final class Address {
         if (zipCode == null) throw new IllegalArgumentException("CEP é obrigatório.");
     }
 
-    public String getState() {
-        return state;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public String getNeighborhood() {
-        return neighborhood;
-    }
-
-    public String getComplement() {
-        return complement;
-    }
-
-    public String getZipCode() {
-        return zipCode.getValue();
-    }
+    public String getState() { return state; }
+    public String getCity() { return city; }
+    public String getStreet() { return street; }
+    public String getNumber() { return number; }
+    public String getNeighborhood() { return neighborhood; }
+    public String getComplement() { return complement; }
+    public String getZipCode() { return zipCode.getValue(); }
 
     @Override
     public boolean equals(Object o) {

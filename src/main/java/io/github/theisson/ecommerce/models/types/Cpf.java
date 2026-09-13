@@ -52,7 +52,5 @@ public final class Cpf {
         }
     }
 
-    public String getValue() {
-        return cpf;
-    }
+    public String getValue() { return cpf; }
 }

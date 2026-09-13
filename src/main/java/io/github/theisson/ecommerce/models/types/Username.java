@@ -32,7 +32,5 @@ public final class Username {
         }
     }
 
-    public String getValue() {
-        return username;
-    }
+    public String getValue() { return username; }
 }

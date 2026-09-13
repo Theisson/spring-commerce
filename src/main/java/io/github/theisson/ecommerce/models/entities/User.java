@@ -38,27 +38,10 @@ public class User {
         this.authProvider = authProvider;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username.getValue();
-    }
-
-    public String getEmail() {
-        return email.getValue();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public AuthProvider getAuthProvider() {
-        return authProvider;
-    }
+    public Long getId() { return id; }
+    public String getUsername() { return username.getValue(); }
+    public String getEmail() { return email.getValue(); }
+    public String getPassword() { return password; }
+    public UserRole getRole() { return role; }
+    public AuthProvider getAuthProvider() { return authProvider; }
 }

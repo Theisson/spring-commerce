@@ -20,10 +20,6 @@ public final class Money implements Serializable {
         return new Money(0);
     }
 
-    public long getAmount() {
-        return amount;
-    }
-
     public Money add(Money other) {
         return new Money(this.amount + other.amount);
     }
@@ -51,6 +47,8 @@ public final class Money implements Serializable {
     public BigDecimal toBigDecimal() {
         return BigDecimal.valueOf(amount, 2);
     }
+
+    public long getAmount() { return amount; }
 
     @Override
     public boolean equals(Object o) {

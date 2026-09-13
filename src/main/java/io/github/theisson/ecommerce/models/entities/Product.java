@@ -79,41 +79,15 @@ public class Product {
         this.deletedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Money getPrice() {
-        return price;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public Integer getStockQuantity() {
-        return stockQuantity;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public Instant getDeletedAt() {
-        return deletedAt;
-    }
-
-    public Set<Category> getCategories() {
-        return Collections.unmodifiableSet(categories);
-    }
+    public Long getId() { return id; }
+    public String getName() { return name; }
+    public String getDescription() { return description; }
+    public Money getPrice() { return price; }
+    public String getImageUrl() { return imageUrl; }
+    public Integer getStockQuantity() { return stockQuantity; }
+    public Long getVersion() { return version; }
+    public Instant getDeletedAt() { return deletedAt; }
+    public Set<Category> getCategories() { return Collections.unmodifiableSet(categories); }
 
     @Override
     public boolean equals(Object o) {
