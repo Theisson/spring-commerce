@@ -71,7 +71,7 @@ Este documento mapeia cada requisito do `requirements.md` ao seu status de imple
 | RNF-06 | Padronização de Exceções | `Concluído` | `controllers/handlers/GlobalExceptionHandler.java`, `dto/error/` | — |
 | RNF-07 | Autenticação Stateless (Dual-Token JWT) | `Concluído` | `config/SecurityConfig.java`, `services/security/TokenProvider.java`, `LoginUser.java`, `RefreshTokens.java`, `LogoutUser.java` | — |
 | RNF-08 | Integridade Referencial em Deleções | `Concluído` | `Product.java` (`softDelete()`), `ProductRepository.java` (`findActiveById`, `hasOrders`, `findByFilters`), `DeleteProduct.java` | — |
-| RNF-09 | Documentação OpenAPI/Swagger | `Pendente` | — | `springdoc-openapi` — baixa prioridade |
+| RNF-09 | Documentação OpenAPI/Swagger | `Parcial` | `pom.xml` — `springdoc-openapi-starter-webmvc-ui` (Swagger UI em `/swagger-ui.html`), `config/SecurityConfig.java` (rotas do springdoc liberadas) | Anotações `@Operation`/`@ApiResponse` nos contratos dos controllers pendentes — baixa prioridade |
 | RNF-10 | Multi-Ambiente (H2 / PostgreSQL) | `Parcial` | `application-test.properties` (H2 em memória) | Perfil `prod` com PostgreSQL pendente — depende de RNF-12 |
 | RNF-11 | Cache com Redis | `Pendente` | — | Baixa prioridade |
 | RNF-12 | Docker Compose | `Pendente` | — | Baixa prioridade |

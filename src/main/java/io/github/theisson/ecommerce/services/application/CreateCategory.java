@@ -8,15 +8,13 @@ import io.github.theisson.ecommerce.exceptions.DatabaseException;
 import io.github.theisson.ecommerce.models.entities.Category;
 import io.github.theisson.ecommerce.repositories.CategoryRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CreateCategory {
 
     private final CategoryRepository categoryRepository;
-
-    public CreateCategory(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 
     @Transactional
     public CategoryResponseDTO execute(CategoryRequestDTO dto) {

@@ -14,29 +14,18 @@ import io.github.theisson.ecommerce.services.application.GetProduct;
 import io.github.theisson.ecommerce.services.application.ListProducts;
 import io.github.theisson.ecommerce.services.application.UpdateProduct;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/products")
 public class ProductController {
+    
     private final ListProducts listProducts;
     private final GetProduct getProduct;
     private final CreateProduct createProduct;
     private final UpdateProduct updateProduct;
     private final DeleteProduct deleteProduct;
-
-    public ProductController(
-        ListProducts listProducts,
-        GetProduct getProduct,
-        CreateProduct createProduct,
-        UpdateProduct updateProduct,
-        DeleteProduct deleteProduct
-    ) {
-        this.listProducts = listProducts;
-        this.getProduct = getProduct;
-        this.createProduct = createProduct;
-        this.updateProduct = updateProduct;
-        this.deleteProduct = deleteProduct;
-    }
 
     @GetMapping
     public ResponseEntity<Page<ProductResponseDTO>> findAll(

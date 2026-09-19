@@ -3,9 +3,10 @@ package io.github.theisson.ecommerce.models.types;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
 
 @Embeddable
+@EqualsAndHashCode
 public final class Address {
 
     @Column(name = "state", nullable = false, length = 2)
@@ -65,23 +66,4 @@ public final class Address {
     public String getNeighborhood() { return neighborhood; }
     public String getComplement() { return complement; }
     public String getZipCode() { return zipCode.getValue(); }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return Objects.equals(state, address.state) &&
-                Objects.equals(city, address.city) &&
-                Objects.equals(street, address.street) &&
-                Objects.equals(number, address.number) &&
-                Objects.equals(neighborhood, address.neighborhood) &&
-                Objects.equals(complement, address.complement) &&
-                Objects.equals(getZipCode(), address.getZipCode());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(state, city, street, number, neighborhood, complement, getZipCode());
-    }
 }

@@ -17,25 +17,20 @@ import io.github.theisson.ecommerce.dto.TokenResponseDTO;
 import io.github.theisson.ecommerce.models.entities.RefreshToken;
 import io.github.theisson.ecommerce.models.entities.User;
 import io.github.theisson.ecommerce.repositories.RefreshTokenRepository;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class TokenProvider {
+
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtEncoder jwtEncoder;
-    private final long accessTokenExpiration;
-    private final long refreshTokenExpiration;
 
-    public TokenProvider(
-        RefreshTokenRepository refreshTokenRepository,
-        JwtEncoder jwtEncoder,
-        @Value("${app.security.jwt.access-token.expiration-seconds}") long accessTokenExpiration,
-        @Value("${app.security.jwt.refresh-token.expiration-seconds}") long refreshTokenExpiration
-    ) {
-        this.refreshTokenRepository = refreshTokenRepository;
-        this.jwtEncoder = jwtEncoder;
-        this.accessTokenExpiration = accessTokenExpiration;
-        this.refreshTokenExpiration = refreshTokenExpiration;
-    }
+    @Value("${app.security.jwt.access-token.expiration-seconds}")
+    private final long accessTokenExpiration;
+
+    @Value("${app.security.jwt.refresh-token.expiration-seconds}")
+    private final long refreshTokenExpiration;
 
     public TokenResponseDTO generateTokenPair(User user) {
         String accessToken = generateAccessToken(user);

@@ -7,15 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 import io.github.theisson.ecommerce.dto.CategoryResponseDTO;
 import io.github.theisson.ecommerce.models.entities.Category;
 import io.github.theisson.ecommerce.repositories.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ListCategories {
 
     private final CategoryRepository categoryRepository;
-
-    public ListCategories(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 
     @Transactional(readOnly = true)
     public Page<CategoryResponseDTO> execute(Pageable pageable) {

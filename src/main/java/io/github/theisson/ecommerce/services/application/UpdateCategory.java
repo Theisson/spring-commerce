@@ -10,15 +10,13 @@ import io.github.theisson.ecommerce.exceptions.ResourceNotFoundException;
 import io.github.theisson.ecommerce.models.entities.Category;
 import io.github.theisson.ecommerce.repositories.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class UpdateCategory {
 
     private final CategoryRepository categoryRepository;
-
-    public UpdateCategory(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 
     @Transactional
     public CategoryResponseDTO execute(Long id, CategoryRequestDTO dto) {

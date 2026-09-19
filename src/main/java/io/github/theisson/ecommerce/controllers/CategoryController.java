@@ -14,8 +14,10 @@ import io.github.theisson.ecommerce.services.application.GetCategory;
 import io.github.theisson.ecommerce.services.application.ListCategories;
 import io.github.theisson.ecommerce.services.application.UpdateCategory;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/categories")
 public class CategoryController {
 
@@ -24,20 +26,6 @@ public class CategoryController {
     private final CreateCategory createCategory;
     private final UpdateCategory updateCategory;
     private final DeleteCategory deleteCategory;
-
-    public CategoryController(
-        ListCategories listCategories,
-        GetCategory getCategory,
-        CreateCategory createCategory,
-        UpdateCategory updateCategory,
-        DeleteCategory deleteCategory
-    ) {
-        this.listCategories = listCategories;
-        this.getCategory = getCategory;
-        this.createCategory = createCategory;
-        this.updateCategory = updateCategory;
-        this.deleteCategory = deleteCategory;
-    }
 
     @GetMapping
     public ResponseEntity<Page<CategoryResponseDTO>> findAll(Pageable pageable) {

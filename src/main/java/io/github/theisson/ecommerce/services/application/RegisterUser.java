@@ -10,23 +10,17 @@ import io.github.theisson.ecommerce.exceptions.DatabaseException;
 import io.github.theisson.ecommerce.models.entities.User;
 import io.github.theisson.ecommerce.models.types.*;
 import io.github.theisson.ecommerce.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class RegisterUser {
     
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final String pepper;
 
-    public RegisterUser(
-        UserRepository userRepository, 
-        PasswordEncoder passwordEncoder, 
-        @Value("${app.security.password.pepper}") String pepper
-    ) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.pepper = pepper;
-    }
+    @Value("${app.security.password.pepper}")
+    private final String pepper;
 
     @Transactional
     public UserResponseDTO execute(UserRequestDTO dto) {

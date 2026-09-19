@@ -11,16 +11,14 @@ import io.github.theisson.ecommerce.models.types.Money;
 import io.github.theisson.ecommerce.repositories.CategoryRepository;
 import io.github.theisson.ecommerce.repositories.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class UpdateProduct {
+    
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-
-    public UpdateProduct(ProductRepository productRepository, CategoryRepository categoryRepository) {
-        this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
-    }
 
     @Transactional
     public ProductResponseDTO execute(Long id, ProductRequestDTO dto) {

@@ -2,9 +2,10 @@ package io.github.theisson.ecommerce.models.types;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
 
 @Embeddable
+@EqualsAndHashCode 
 public final class ZipCode {
 
     @Column(name = "zip_code", nullable = false, length = 8)
@@ -26,17 +27,4 @@ public final class ZipCode {
     }
 
     public String getValue() { return zipCode; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ZipCode other = (ZipCode) o;
-        return Objects.equals(zipCode, other.zipCode);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(zipCode);
-    }
 }

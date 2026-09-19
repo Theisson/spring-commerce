@@ -6,14 +6,13 @@ import io.github.theisson.ecommerce.dto.ProductResponseDTO;
 import io.github.theisson.ecommerce.exceptions.ResourceNotFoundException;
 import io.github.theisson.ecommerce.models.entities.Product;
 import io.github.theisson.ecommerce.repositories.ProductRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class GetProduct {
+    
     private final ProductRepository productRepository;
-
-    public GetProduct(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 
     @Transactional(readOnly = true)
     public ProductResponseDTO execute(Long id) {

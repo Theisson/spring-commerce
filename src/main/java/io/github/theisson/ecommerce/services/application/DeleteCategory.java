@@ -4,15 +4,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import io.github.theisson.ecommerce.exceptions.ResourceNotFoundException;
 import io.github.theisson.ecommerce.repositories.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class DeleteCategory {
 
     private final CategoryRepository categoryRepository;
-
-    public DeleteCategory(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 
     @Transactional
     public void execute(Long id) {

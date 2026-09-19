@@ -9,16 +9,14 @@ import io.github.theisson.ecommerce.models.types.Money;
 import io.github.theisson.ecommerce.repositories.CategoryRepository;
 import io.github.theisson.ecommerce.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CreateProduct {
+    
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-
-    public CreateProduct(ProductRepository productRepository, CategoryRepository categoryRepository) {
-        this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
-    }
 
     @Transactional
     public ProductResponseDTO execute(ProductRequestDTO dto) {

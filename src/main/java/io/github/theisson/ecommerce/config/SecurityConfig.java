@@ -1,6 +1,7 @@
 package io.github.theisson.ecommerce.config;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,13 +22,11 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
 
+    @Value("${app.security.jwt.secret}")
     private final String jwtSecret;
-
-    public SecurityConfig(@Value("${app.security.jwt.secret}") String jwtSecret) {
-        this.jwtSecret = jwtSecret;
-    }
 
     @Bean
     public JwtDecoder jwtDecoder() {
@@ -73,6 +72,7 @@ public class SecurityConfig {
             .httpBasic(basic -> basic.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/swagger-ui.html", "/swagger-ui", "/swagger-ui/", "/swagger-ui/**", "/v3/api-docs.yaml", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/auth/register", "/auth/login", "/auth/refresh").permitAll()
                 .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()

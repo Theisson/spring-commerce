@@ -20,8 +20,10 @@ import io.github.theisson.ecommerce.services.application.LogoutUser;
 import io.github.theisson.ecommerce.services.application.RefreshTokens;
 import io.github.theisson.ecommerce.services.application.RegisterUser;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
     
@@ -29,13 +31,6 @@ public class AuthController {
     private final LoginUser loginUser;
     private final RefreshTokens refreshTokens;
     private final LogoutUser logoutUser;
-
-    public AuthController(RegisterUser registerUser, LoginUser loginUser, RefreshTokens refreshTokens, LogoutUser logoutUser) {
-        this.registerUser = registerUser;
-        this.loginUser = loginUser;
-        this.refreshTokens = refreshTokens;
-        this.logoutUser = logoutUser;
-    }
     
     @PostMapping("/register")
     public ResponseEntity<UserResponseDTO> register(@Valid @RequestBody UserRequestDTO dto) {

@@ -5,14 +5,13 @@ import org.springframework.transaction.annotation.Transactional;
 import io.github.theisson.ecommerce.exceptions.ResourceNotFoundException;
 import io.github.theisson.ecommerce.models.entities.Product;
 import io.github.theisson.ecommerce.repositories.ProductRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class DeleteProduct {
+    
     private final ProductRepository productRepository;
-
-    public DeleteProduct(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 
     @Transactional
     public void execute(Long id) {

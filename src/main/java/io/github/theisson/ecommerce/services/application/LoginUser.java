@@ -1,5 +1,6 @@
 package io.github.theisson.ecommerce.services.application;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,23 +13,15 @@ import io.github.theisson.ecommerce.repositories.UserRepository;
 import io.github.theisson.ecommerce.services.security.TokenProvider;
 
 @Service
+@RequiredArgsConstructor
 public class LoginUser {
+    
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
-    private final String pepper;
 
-    public LoginUser(
-        UserRepository userRepository,
-        PasswordEncoder passwordEncoder,
-        TokenProvider tokenProvider,
-        @Value("${app.security.password.pepper}") String pepper
-    ) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.tokenProvider = tokenProvider;
-        this.pepper = pepper;
-    }
+    @Value("${app.security.password.pepper}")
+    private final String pepper;
 
     @Transactional
     public TokenResponseDTO execute(LoginRequestDTO dto) {

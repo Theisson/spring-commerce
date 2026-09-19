@@ -6,15 +6,13 @@ import io.github.theisson.ecommerce.dto.CategoryResponseDTO;
 import io.github.theisson.ecommerce.exceptions.ResourceNotFoundException;
 import io.github.theisson.ecommerce.models.entities.Category;
 import io.github.theisson.ecommerce.repositories.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class GetCategory {
 
     private final CategoryRepository categoryRepository;
-
-    public GetCategory(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 
     @Transactional(readOnly = true)
     public CategoryResponseDTO execute(Long id) {

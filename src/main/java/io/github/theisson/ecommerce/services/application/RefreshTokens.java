@@ -10,16 +10,14 @@ import io.github.theisson.ecommerce.models.entities.RefreshToken;
 import io.github.theisson.ecommerce.models.entities.User;
 import io.github.theisson.ecommerce.repositories.RefreshTokenRepository;
 import io.github.theisson.ecommerce.services.security.TokenProvider;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class RefreshTokens {
+    
     private final RefreshTokenRepository refreshTokenRepository;
     private final TokenProvider tokenProvider;
-
-    public RefreshTokens(RefreshTokenRepository refreshTokenRepository, TokenProvider tokenProvider) {
-        this.refreshTokenRepository = refreshTokenRepository;
-        this.tokenProvider = tokenProvider;
-    }
 
     @Transactional
     public TokenResponseDTO execute(RefreshTokenRequestDTO dto) {
